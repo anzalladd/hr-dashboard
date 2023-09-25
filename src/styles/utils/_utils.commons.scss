@@ -1,0 +1,21 @@
+.u-bg-color-primary {
+  background-color: $color-primary;
+}
+
+.u-bg-color-secondary {
+  background-color: $color-secondary;
+}
+
+.hide-footer-table {
+  .v-data-table-footer {
+    display: none;
+  }
+}
+
+.v-data-table-header__content {
+  font-size: 14px;
+}
+
+.v-data-table__tr {
+  font-size: 12px;
+}
