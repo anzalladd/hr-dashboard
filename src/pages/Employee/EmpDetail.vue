@@ -11,706 +11,785 @@
       </template></v-breadcrumbs
     >
 
-    <v-card class="pr-2 mx-2">
-      <v-row>
-        <v-col class="mx-0" cols="12" sm="3" md="3">
-          <v-card class="mx-3 my-2" elevation="5">
-            <v-card-text class="pa-1">
-              <v-img
-                class="mx-2 my-2 pt-1"
-                contain
-                center
-                max-height="250"
-                v-bind:src="detailEmp.foto"
-              ></v-img>
+    <v-container>
+      <div class="d-flex justify-end pb-4">
+        <downloadexcel :data="sheetsData" :settings="excelSettings">
+          <v-btn dark class="mb-2" color="#b9a700">
+            <v-icon small>mdi-download</v-icon> Download
+          </v-btn>
+        </downloadexcel>
+      </div>
+      <v-card class="pr-2 mt-2">
+        <v-row>
+          <v-col class="mx-0" cols="12" sm="3" md="3">
+            <v-card class="mx-3 my-2" elevation="5">
+              <v-card-text class="pa-1">
+                <v-img
+                  class="mx-2 my-2 pt-1"
+                  contain
+                  center
+                  max-height="250"
+                  v-bind:src="detailEmp.foto"
+                ></v-img>
 
-              <h3
-                align="center"
-                justify="center"
-                style="font-weight: 600; color: black"
-              >
-                {{ detailEmp.nama_lengkap }}
-              </h3>
-              <div style="text-align: center" class="mb-5">
-                <v-chip color="blue" outlined small> Employee </v-chip>
-              </div>
-              <div class="px-3">
-                <v-text-field
-                  v-model="detailEmp.no_induk_karyawan"
-                  label="Nomor Induk Karyawan"
-                  outlined
-                  readonly
-                  dense
-                    filled
-                ></v-text-field>
-                <v-text-field
-                  v-model="detailEmp.divisi_nama"
-                  label="Divisi"
-                  outlined
-                  readonly
-                  dense
-                    filled
-                ></v-text-field>
-                <v-text-field
-                  v-model="detailEmp.dept_nama"
-                  label="Department"
-                  outlined
-                  readonly
-                  dense
-                    filled
-                ></v-text-field>
-                <v-text-field
-                  v-model="detailEmp.jabatan"
-                  label="Jabatan"
-                  outlined
-                  readonly
-                  dense
-                    filled
-                ></v-text-field>
-                <v-text-field
-                  v-model="detailEmp.status_karyawan_nama"
-                  label="Status Karyawan"
-                  outlined
-                  readonly
-                  dense
-                    filled
-                ></v-text-field>
-              </div>
-            </v-card-text>
-            <v-divider class="mx-4"></v-divider>
-          </v-card>
-        </v-col>
-        <v-col class="mx-0" cols="12" sm="9" md="9">
-          <v-row>
-            <v-col
-              cols="12"
-              align="center"
-              justify="center"
-              class="px-5 pt-3 pb-0 d-md-none"
-            >
-              <v-select
-                :items="itemstabs"
-                label="Pilih Tabs"
-                item-value="value"
-                item-text="text"
-                v-on:change="selectedTabs"
-                solo
-              ></v-select>
-            </v-col>
-            <v-tabs class="d-none d-md-block mt-3 ml-3 mr-3 mb-5">
-              <v-tab @click="tabsdetail(1)">Personal Data</v-tab>
-              <v-tab @click="tabsdetail(2)">Family Data</v-tab>
-              <v-tab @click="tabsdetail(3)">Work Data</v-tab>
-              <v-tab @click="tabsdetail(4)">Document</v-tab>
-              <v-tab @click="tabsdetail(5)">Status & Lain-lain</v-tab>
-            </v-tabs>
-          </v-row>
-          <v-card class="fontall mx-1 my-2" elevation="5">
-            <v-card-text v-if="personaldata == true">
-              <!-- <div>Personal Data</div> -->
-              <v-row class="mb-3 mt-2 ml-1">
-                <h4>Data Diri</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
+                <h3
+                  align="center"
+                  justify="center"
+                  style="font-weight: 600; color: black"
+                >
+                  {{ detailEmp.nama_lengkap }}
+                </h3>
+                <div style="text-align: center" class="mb-5 mt-5">
+                  <v-chip color="blue" outlined small> Employee </v-chip>
+                </div>
+                <div class="px-3">
                   <v-text-field
-                    v-model="detailEmp.nama_lengkap"
-                    label="Nama Lengkap"
+                    v-model="detailEmp.no_induk_karyawan"
+                    label="Nomor Induk Karyawan"
                     outlined
                     readonly
                     dense
                     filled
                   ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
                   <v-text-field
-                    v-model="detailEmp.no_ktp"
-                    label="No Ktp"
+                    v-model="detailEmp.divisi_nama"
+                    label="Divisi"
                     outlined
                     readonly
                     dense
                     filled
                   ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
                   <v-text-field
-                    v-model="detailEmp.tempat_lahir"
-                    label="Tempat Lahir"
+                    v-model="detailEmp.dept_nama"
+                    label="Department"
                     outlined
                     readonly
                     dense
                     filled
                   ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
                   <v-text-field
-                    v-model="detailEmp.tanggal_lahir"
-                    label="Tanggal Lahir"
+                    v-model="detailEmp.jabatan"
+                    label="Jabatan"
                     outlined
                     readonly
                     dense
                     filled
                   ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.gol_darah"
-                    label="Gol Darah"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.agama"
-                    label="Agama"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.jenis_kelamin"
-                    label="Jenis Kelamin"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Alamat</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.no_rumah"
-                    label="No Rumah"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.rt"
-                    label="RT"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.rw"
-                    label="RW"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.desa"
-                    label="Desa"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.kec"
-                    label="Kecamatan"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.kab"
-                    label="Kab/Kota"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Contact</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12">
-                  <v-text-field
-                    v-model="detailEmp.telpon"
-                    label="No Telp"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.no_telpon_darurat"
-                    label="No Telp (darurat)"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.hubungan_telp_darurat"
-                    label="Hubungan Contact Darurat"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-text v-if="familydata == true">
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Keluarga</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12">
-                  <v-text-field
-                    v-model="detailEmp.nama_ortu"
-                    label="Orang Tua"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.status_nikah"
-                    label="Status Nikah"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.nama_istri_suami"
-                    label="Istri/Suami"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.pekerjaan_istri_suami"
-                    label="Pekerjaan"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Daftar Anak</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-simple-table>
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">Nama</th>
-                          <th class="text-left">Anak Ke</th>
-                          <th class="text-left">TTL</th>
-                          <th class="text-left">Kerja/Sekolah</th>
-                          <th class="text-left">Status Nikah</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="item in itemlistanak" :key="item.id">
-                          <td>{{ item.nama }}</td>
-                          <td>{{ item.anak_ke }}</td>
-                          <td>
-                            {{ item.tempat_lahir }}/{{ item.tanggal_lahir }}
-                          </td>
-                          <td>{{ item.status_status }}</td>
-                          <td>{{ item.status_nikah }}</td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-text v-if="workdata == true">
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Pekerjaan Sekarang</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.pendidikan_terakhir"
-                    label="Pendidikan Terakhir"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.mulai_masuk_kerja"
-                    label="Mulai Masuk Kerja"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.bagian"
-                    label="Bagian"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.ditetapkan"
-                    label="Ditetapkan"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.no_anggota_koperasi"
-                    label="No Koperasi"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
                   <v-text-field
                     v-model="detailEmp.status_karyawan_nama"
-                    label="Status"
+                    label="Status Karyawan"
                     outlined
                     readonly
                     dense
                     filled
                   ></v-text-field>
-                </v-col>
-                <v-col v-if="detailEmp.status_karyawan!=1" cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.tanggal_kontrak"
-                    label="Tanggal Kontrak Selesai"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field v-if="showGaji == true"
-                    v-model="detailEmp.gaji_sekarang"
-                    label="Gaji"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="4">
-                  <v-text-field
-                    v-model="detailEmp.sisa_cuti"
-                    label="Sisa Cuti"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Perpindahan Jabatan Kerja Sekarang</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-data-table
-                    :headers="headerslistPerpindahanJabatanPekerjaan"
-                    :items="itemlistPerpindahanJabatanPekerjaan"
-                    class="rounded elevation-1 mx-1 pa-1 itemchild"
-                  >
-
-                    <template v-slot:item.jabatan_lama="{ item }">
-                      {{ item.jabatan_lama }} <br> ({{ item.nama_dept_lama }})
-                    </template><template v-slot:item.jabatan_baru="{ item }">
-                      {{ item.jabatan_baru }} <br> ({{ item.nama_dept_baru }})
-                    </template>
-                    <template v-slot:item.tanggal_ditetapkan="{ item }">
-                      {{ gettanggal(item.tanggal_ditetapkan) }}
-                    </template>
-                    <template v-slot:item.tanggal_mulai="{ item }">
-                      {{ gettanggal(item.tanggal_mulai) }}
-                    </template>
-                    <template v-slot:item.dok_1="{ item }">
-                      {{ getdokname(item.dok_1) }}
-                        <v-btn dark small class="mb-2 ml-5 mt-2" @click="downloadFile(item.dok_1,item)" color="#25695c">
-                            <v-icon small>mdi-download-circle-outline</v-icon> Download
-                        </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Riwayat Kerja</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-simple-table>
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">Unit Perusahaan</th>
-                          <th class="text-left">Tanggal</th>
-                          <th class="text-left">Jabatan</th>
-                          <th class="text-left">Alasan Kepindahan</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="item in itemlistriwayatkerja" :key="item.id">
-                          <td>{{ item.unit_perusahaan }}</td>
-                          <td>{{ item.tgl }}</td>
-                          <td>{{ item.jabatan }}</td>
-                          <td>{{ item.alasan_kepindahan }}</td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Pengalaman Kerja</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-simple-table>
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">Perusahaan</th>
-                          <th class="text-left">Jabatan</th>
-                          <th class="text-left">Alasan Pindah</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          v-for="item in itemlistpengalamankerja"
-                          :key="item.id"
+                </div>
+              </v-card-text>
+              <v-divider class="mx-4"></v-divider>
+            </v-card>
+          </v-col>
+          <v-col class="mx-0" cols="12" sm="9" md="9">
+            <v-row>
+              <v-col
+                cols="12"
+                align="center"
+                justify="center"
+                class="px-5 pt-3 pb-0 d-md-none"
+              >
+                <v-select
+                  :items="itemstabs"
+                  label="Pilih Tabs"
+                  item-value="value"
+                  item-text="text"
+                  v-on:change="selectedTabs"
+                  solo
+                ></v-select>
+              </v-col>
+              <v-tabs class="d-none d-md-block mt-3 ml-3 mr-3 mb-5">
+                <v-tab @click="tabsdetail(1)">Personal Data</v-tab>
+                <v-tab @click="tabsdetail(2)">Family Data</v-tab>
+                <v-tab @click="tabsdetail(3)">Work Data</v-tab>
+                <v-tab @click="tabsdetail(4)">Document</v-tab>
+                <v-tab @click="tabsdetail(5)">Status & Lain-lain</v-tab>
+              </v-tabs>
+            </v-row>
+            <v-card class="fontall mx-1 my-2" elevation="5">
+              <v-card-text v-if="personaldata == true">
+                <!-- <div>Personal Data</div> -->
+                <v-row class="mb-3 mt-2 ml-1">
+                  <h4>Data Diri</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.nama_lengkap"
+                      label="Nama Lengkap"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.no_ktp"
+                      label="No Ktp"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.tempat_lahir"
+                      label="Tempat Lahir"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.tanggal_lahir"
+                      label="Tanggal Lahir"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.gol_darah"
+                      label="Gol Darah"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.agama"
+                      label="Agama"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.jenis_kelamin"
+                      label="Jenis Kelamin"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Alamat</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.no_rumah"
+                      label="No Rumah"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.rt"
+                      label="RT"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.rw"
+                      label="RW"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.desa"
+                      label="Desa"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.kec"
+                      label="Kecamatan"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.kab"
+                      label="Kab/Kota"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Contact</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-text-field
+                      v-model="detailEmp.telpon"
+                      label="No Telp"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.no_telpon_darurat"
+                      label="No Telp (darurat)"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.hubungan_telp_darurat"
+                      label="Hubungan Contact Darurat"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-text v-if="familydata == true">
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Keluarga</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-text-field
+                      v-model="detailEmp.nama_ortu"
+                      label="Orang Tua"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.status_nikah"
+                      label="Status Nikah"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.nama_istri_suami"
+                      label="Istri/Suami"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.pekerjaan_istri_suami"
+                      label="Pekerjaan"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Daftar Anak</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12">
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">Nama</th>
+                            <th class="text-left">Anak Ke</th>
+                            <th class="text-left">TTL</th>
+                            <th class="text-left">Kerja/Sekolah</th>
+                            <th class="text-left">Status Nikah</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="item in itemlistanak" :key="item.id">
+                            <td>{{ item.nama }}</td>
+                            <td>{{ item.anak_ke }}</td>
+                            <td>
+                              {{ item.tempat_lahir }}/{{ item.tanggal_lahir }}
+                            </td>
+                            <td>{{ item.status_status }}</td>
+                            <td>{{ item.status_nikah }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-text v-if="workdata == true">
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Pekerjaan Sekarang</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.pendidikan_terakhir"
+                      label="Pendidikan Terakhir"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.mulai_masuk_kerja"
+                      label="Mulai Masuk Kerja"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.bagian"
+                      label="Bagian"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.ditetapkan"
+                      label="Ditetapkan"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.no_anggota_koperasi"
+                      label="No Koperasi"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.status_karyawan_nama"
+                      label="Status"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="detailEmp.status_karyawan != 1" cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.tanggal_kontrak"
+                      label="Tanggal Kontrak Selesai"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-if="showGaji == true"
+                      v-model="detailEmp.gaji_sekarang"
+                      label="Gaji"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-text-field
+                      v-model="detailEmp.sisa_cuti"
+                      label="Sisa Cuti"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Perpindahan Jabatan Kerja Sekarang</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12">
+                    <v-data-table
+                      :headers="headerslistPerpindahanJabatanPekerjaan"
+                      :items="itemlistPerpindahanJabatanPekerjaan"
+                      class="rounded elevation-1 mx-1 pa-1 itemchild"
+                    >
+                      <template v-slot:item.jabatan_lama="{ item }">
+                        {{ item.jabatan_lama }} <br />
+                        ({{ item.nama_dept_lama }}) </template
+                      ><template v-slot:item.jabatan_baru="{ item }">
+                        {{ item.jabatan_baru }} <br />
+                        ({{ item.nama_dept_baru }})
+                      </template>
+                      <template v-slot:item.tanggal_ditetapkan="{ item }">
+                        {{ gettanggal(item.tanggal_ditetapkan) }}
+                      </template>
+                      <template v-slot:item.tanggal_mulai="{ item }">
+                        {{ gettanggal(item.tanggal_mulai) }}
+                      </template>
+                      <template v-slot:item.dok_1="{ item }">
+                        {{ getdokname(item.dok_1) }}
+                        <v-btn
+                          dark
+                          small
+                          class="mb-2 ml-5 mt-2"
+                          @click="downloadFile(item.dok_1, item)"
+                          color="#25695c"
                         >
-                          <td>{{ item.perusahaan }}</td>
-                          <td>{{ item.jabatan }}</td>
-                          <td>{{ item.alasan_kepindahan }}</td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-text v-if="documentdata == true">
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Informasi Dokumen</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.nomor_jamsostek"
-                    label="No Jamsostek"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.bpjs_kesehatan"
-                    label="No Bpjs"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.no_rek"
-                    label="No Rekening"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <v-text-field
-                    v-model="detailEmp.no_npwp"
-                    label="No Npwp"
-                    outlined
-                    readonly
-                    dense
-                    filled
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card-text>
-            <v-card-text v-if="statusdata == true">
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Update Status Karyawan</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12">
-                  <v-data-table
-                    :headers="headerslistStatusKaryawan"
-                    :items="itemlistStatusKaryawan"
-                    class="rounded elevation-1 mx-1 pa-1 itemchild"
-                  >                    
-                    <template v-slot:item.created_at="{ item }">
-                      {{ gettanggal(item.created_at) }}
-                    </template>
-                    <template v-slot:item.dok_1="{ item }">
-                      {{ getdokname(item.dok_1) }}
-                        <v-btn dark small class="mb-2 ml-5 mt-2" @click="downloadFile(item.dok_1,item)" color="#25695c">
-                            <v-icon small>mdi-download-circle-outline</v-icon> Download
+                          <v-icon small>mdi-download-circle-outline</v-icon>
+                          Download
                         </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Update Kontrak Karyawan</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12">
-                  <v-data-table
-                    :headers="headerslistKontrakKaryawan"
-                    :items="itemlistKontrakKaryawan"
-                    class="rounded elevation-1 mx-1 pa-1 itemchild"
-                  >                    
-                    
-                    <template v-slot:item.tanggal_kontrak_lama="{ item }">
-                      {{ gettanggal(item.tanggal_kontrak_lama) }}
-                    </template>
-                    <template v-slot:item.tanggal_kontrak_baru="{ item }">
-                      {{ gettanggal(item.tanggal_kontrak_baru) }}
-                    </template>
-                    <template v-slot:item.dok_1="{ item }">
-                      {{ getdokname(item.dok_1) }}
-                        <v-btn dark small class="mb-2 ml-5 mt-2" @click="downloadFile(item.dok_1,item)" color="#25695c">
-                            <v-icon small>mdi-download-circle-outline</v-icon> Download
+                      </template>
+                    </v-data-table>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Riwayat Kerja</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12">
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">Unit Perusahaan</th>
+                            <th class="text-left">Tanggal</th>
+                            <th class="text-left">Jabatan</th>
+                            <th class="text-left">Alasan Kepindahan</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="item in itemlistriwayatkerja"
+                            :key="item.id"
+                          >
+                            <td>{{ item.unit_perusahaan }}</td>
+                            <td>{{ item.tgl }}</td>
+                            <td>{{ item.jabatan }}</td>
+                            <td>{{ item.alasan_kepindahan }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Riwayat Pelatihan</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12">
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">Judul / Topik Training</th>
+                            <th class="text-left">Tanggal</th>
+                            <th class="text-left">Tempat</th>
+                            <th class="text-left">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="item in itemListHistoryTraining"
+                            :key="item.id"
+                          >
+                            <td>{{ item.nama_training }}</td>
+                            <td>{{ item.tanggal_pelaksanaan }}</td>
+                            <td>{{ item.tempat_pelaksanaan }}</td>
+                            <td>{{ item.status_training }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Pengalaman Kerja</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12">
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left">Perusahaan</th>
+                            <th class="text-left">Jabatan</th>
+                            <th class="text-left">Alasan Pindah</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="item in itemlistpengalamankerja"
+                            :key="item.id"
+                          >
+                            <td>{{ item.perusahaan }}</td>
+                            <td>{{ item.jabatan }}</td>
+                            <td>{{ item.alasan_kepindahan }}</td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-text v-if="documentdata == true">
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Informasi Dokumen</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.nomor_jamsostek"
+                      label="No Jamsostek"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.bpjs_kesehatan"
+                      label="No Bpjs"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.no_rek"
+                      label="No Rekening"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6">
+                    <v-text-field
+                      v-model="detailEmp.no_npwp"
+                      label="No Npwp"
+                      outlined
+                      readonly
+                      dense
+                      filled
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-text v-if="statusdata == true">
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Update Status Karyawan</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-data-table
+                      :headers="headerslistStatusKaryawan"
+                      :items="itemlistStatusKaryawan"
+                      class="rounded elevation-1 mx-1 pa-1 itemchild"
+                    >
+                      <template v-slot:item.created_at="{ item }">
+                        {{ gettanggal(item.created_at) }}
+                      </template>
+                      <template v-slot:item.dok_1="{ item }">
+                        {{ getdokname(item.dok_1) }}
+                        <v-btn
+                          dark
+                          small
+                          class="mb-2 ml-5 mt-2"
+                          @click="downloadFile(item.dok_1, item)"
+                          color="#25695c"
+                        >
+                          <v-icon small>mdi-download-circle-outline</v-icon>
+                          Download
                         </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1"  v-if="showGaji == true">
-                <h4>Update Gaji Karyawan</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row  v-if="showGaji == true">
-                <v-col cols="12" sm="12">
-                  <v-data-table
-                    :headers="headerslistGajiKaryawan"
-                    :items="itemlistGajiKaryawan"
-                    class="rounded elevation-1 mx-1 pa-1 itemchild"
-                  >                    
-                    
-                    <template v-slot:item.tanggal="{ item }">
-                      {{ gettanggal(item.tanggal) }}
-                    </template>
-                    <template v-slot:item.salary_lama="{ item }">
-                      {{ getRupiahNol(item.salary_lama) }}
-                    </template>
-                    <template v-slot:item.salary_baru="{ item }">
-                      {{ getRupiahNol(item.salary_baru) }}
-                    </template>
-                    <template v-slot:item.dok_1="{ item }">
-                      {{ getdokname(item.dok_1) }}
-                        <v-btn dark small class="mb-2 ml-5 mt-2" @click="downloadFile(item.dok_1,item)" color="#25695c">
-                            <v-icon small>mdi-download-circle-outline</v-icon> Download
+                      </template>
+                    </v-data-table>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Update Kontrak Karyawan</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-data-table
+                      :headers="headerslistKontrakKaryawan"
+                      :items="itemlistKontrakKaryawan"
+                      class="rounded elevation-1 mx-1 pa-1 itemchild"
+                    >
+                      <template v-slot:item.tanggal_kontrak_lama="{ item }">
+                        {{ gettanggal(item.tanggal_kontrak_lama) }}
+                      </template>
+                      <template v-slot:item.tanggal_kontrak_baru="{ item }">
+                        {{ gettanggal(item.tanggal_kontrak_baru) }}
+                      </template>
+                      <template v-slot:item.dok_1="{ item }">
+                        {{ getdokname(item.dok_1) }}
+                        <v-btn
+                          dark
+                          small
+                          class="mb-2 ml-5 mt-2"
+                          @click="downloadFile(item.dok_1, item)"
+                          color="#25695c"
+                        >
+                          <v-icon small>mdi-download-circle-outline</v-icon>
+                          Download
                         </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-              <v-row class="mb-2 mt-3 ml-1">
-                <h4>Surat Peringatan Karyawan</h4>
-                <v-divider class="mx-2 mt-3"></v-divider>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="12">
-                  <v-data-table
-                    :headers="headerslistSPKaryawan"
-                    :items="itemlistSPKaryawan"
-                    class="rounded elevation-1 mx-1 pa-1 itemchild"
-                  >                 
-                    <template v-slot:item.tanggal="{ item }">
-                      {{ gettanggal(item.tanggal) }}
-                    </template>
-                    <template v-slot:item.dok_1="{ item }">
-                      {{ getdokname(item.dok_1) }}
-                        <v-btn dark small class="mb-2 ml-5 mt-2" @click="downloadFile(item.dok_1,item)" color="#25695c">
-                            <v-icon small>mdi-download-circle-outline</v-icon> Download
+                      </template>
+                    </v-data-table>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1" v-if="showGaji == true">
+                  <h4>Update Gaji Karyawan</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row v-if="showGaji == true">
+                  <v-col cols="12" sm="12">
+                    <v-data-table
+                      :headers="headerslistGajiKaryawan"
+                      :items="itemlistGajiKaryawan"
+                      class="rounded elevation-1 mx-1 pa-1 itemchild"
+                    >
+                      <template v-slot:item.tanggal="{ item }">
+                        {{ gettanggal(item.tanggal) }}
+                      </template>
+                      <template v-slot:item.salary_lama="{ item }">
+                        {{ getRupiahNol(item.salary_lama) }}
+                      </template>
+                      <template v-slot:item.salary_baru="{ item }">
+                        {{ getRupiahNol(item.salary_baru) }}
+                      </template>
+                      <template v-slot:item.dok_1="{ item }">
+                        {{ getdokname(item.dok_1) }}
+                        <v-btn
+                          dark
+                          small
+                          class="mb-2 ml-5 mt-2"
+                          @click="downloadFile(item.dok_1, item)"
+                          color="#25695c"
+                        >
+                          <v-icon small>mdi-download-circle-outline</v-icon>
+                          Download
                         </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-card>
+                      </template>
+                    </v-data-table>
+                  </v-col>
+                </v-row>
+                <v-row class="mb-2 mt-3 ml-1">
+                  <h4>Surat Peringatan Karyawan</h4>
+                  <v-divider class="mx-2 mt-3"></v-divider>
+                </v-row>
+                <v-row>
+                  <v-col cols="12" sm="12">
+                    <v-data-table
+                      :headers="headerslistSPKaryawan"
+                      :items="itemlistSPKaryawan"
+                      class="rounded elevation-1 mx-1 pa-1 itemchild"
+                    >
+                      <template v-slot:item.tanggal="{ item }">
+                        {{ gettanggal(item.tanggal) }}
+                      </template>
+                      <template v-slot:item.dok_1="{ item }">
+                        {{ getdokname(item.dok_1) }}
+                        <v-btn
+                          dark
+                          small
+                          class="mb-2 ml-5 mt-2"
+                          @click="downloadFile(item.dok_1, item)"
+                          color="#25695c"
+                        >
+                          <v-icon small>mdi-download-circle-outline</v-icon>
+                          Download
+                        </v-btn>
+                      </template>
+                    </v-data-table>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-container>
 
     <v-snackbar
       v-model="snackbar"
@@ -724,10 +803,39 @@
 
 <script>
 import axios from "axios";
+import downloadexcel from "vue-json-excel";
 
 export default {
   name: "EmployeeDetail",
+  components: {
+    downloadexcel,
+  },
   data: () => ({
+    sheetsData: [
+        {
+          name: 'Sheet 1',
+          data: [
+            ['Header 1', 'Header 2'],
+            [1, 'A'],
+            [2, 'B'],
+            [3, 'C'],
+          ],
+        },
+        {
+          name: 'Sheet 2',
+          data: [
+            ['Value'],
+            [10],
+            [20],
+            [30],
+          ],
+        },
+      ],
+      excelSettings: {
+        headers: true,
+        fileformat: 'xlsx',
+        filename: 'my_excel_file',
+      },
     itemsbr: [
       {
         text: "Employee",
@@ -784,7 +892,7 @@ export default {
       status_karyawan: "",
       telpon: "",
       no_telpon_darurat: "",
-      hubungan_telp_darurat:"",
+      hubungan_telp_darurat: "",
       mulai_masuk_kerja: "",
       bagian: "",
       ditetapkan: "",
@@ -865,13 +973,14 @@ export default {
         alasan_kepindahan: "-",
       },
     ],
-    itemlistPerpindahanJabatanPekerjaan:[],
-    itemlistStatusKaryawan:[],
-    itemlistKontrakKaryawan:[],
-    itemlistGajiKaryawan:[],
-    itemlistSPKaryawan:[],
+    itemlistPerpindahanJabatanPekerjaan: [],
+    itemlistStatusKaryawan: [],
+    itemlistKontrakKaryawan: [],
+    itemlistGajiKaryawan: [],
+    itemlistSPKaryawan: [],
+    itemListHistoryTraining: [],
 
-    headerslistPerpindahanJabatanPekerjaan:[
+    headerslistPerpindahanJabatanPekerjaan: [
       // { text: "Nama Karyawan", value: "nama_lengkap" },
       { text: "Jabatan Awal", value: "jabatan_lama" },
       { text: "Jabatan Baru", value: "jabatan_baru" },
@@ -880,27 +989,27 @@ export default {
       { text: "Utilitas", value: "flag_menu" },
       { text: "Dokumen", value: "dok_1" },
     ],
-    headerslistStatusKaryawan:[
+    headerslistStatusKaryawan: [
       { text: "Status Karyawan Lama", value: "nama_status_karyawan_lama" },
       { text: "Status Karyawan Baru", value: "nama_status_karyawan_baru" },
       { text: "Tanggal dibuat", value: "created_at" },
       { text: "Utilitas", value: "flag_menu" },
       { text: "Dokumen", value: "dok_1" },
     ],
-    headerslistKontrakKaryawan:[
+    headerslistKontrakKaryawan: [
       { text: "Status Karyawan", value: "status_karyawan_sekarang" },
       { text: "Kontrak Lama Berakhir", value: "tanggal_kontrak_lama" },
       { text: "Kontrak Baru Berakhir", value: "tanggal_kontrak_baru" },
       { text: "Utilitas", value: "flag_menu" },
       { text: "Dokumen", value: "dok_1" },
     ],
-    headerslistGajiKaryawan:[
+    headerslistGajiKaryawan: [
       { text: "Gaji Lama", value: "salary_lama" },
       { text: "Gaji Baru", value: "salary_baru" },
       { text: "Tanggal", value: "tanggal" },
       { text: "Dokumen", value: "dok_1" },
     ],
-    headerslistSPKaryawan:[
+    headerslistSPKaryawan: [
       { text: "Tanggal Surat", value: "tanggal" },
       { text: "Jenis Surat", value: "jenis_surat" },
       { text: "Deskripsi", value: "deskripsi" },
@@ -936,7 +1045,7 @@ export default {
     this.User = JSON.parse(localStorage.getItem("User"));
     if (this.User) {
       this.admin_id = this.User.code;
-      if(this.User.role_code == '1' || this.User.role_code == '99'){
+      if (this.User.role_code == "1" || this.User.role_code == "99") {
         this.showGaji = true;
       }
     }
@@ -959,24 +1068,25 @@ export default {
           this.detailEmp = response.data.data.result;
           if (response.data.data.result.foto == "-") {
             this.detailEmp.foto = "/images/noimage.png";
-          }else{
-            this.getFoto(response.data.data.result.foto)
+          } else {
+            this.getFoto(response.data.data.result.foto);
           }
           this.itemlistanak = response.data.data.result.listAnak;
           this.itemlistriwayatkerja =
             response.data.data.result.listRiwayatPekerjaan;
           this.itemlistpengalamankerja =
             response.data.data.result.listPengalamanKerja;
-          this.itemlistPerpindahanJabatanPekerjaan = 
+          this.itemlistPerpindahanJabatanPekerjaan =
             response.data.data.result.listPerpindahanJabatanPekerjaan;
-          this.itemlistStatusKaryawan = 
+          this.itemlistStatusKaryawan =
             response.data.data.result.statusPekerjaan;
-          this.itemlistKontrakKaryawan = 
+          this.itemlistKontrakKaryawan =
             response.data.data.result.kontrakPekerjaan;
-          this.itemlistGajiKaryawan = 
+          this.itemlistGajiKaryawan =
             response.data.data.result.perubahanGajiKaryawan;
-          this.itemlistSPKaryawan = 
-            response.data.data.result.spKaryawan;
+          this.itemlistSPKaryawan = response.data.data.result.spKaryawan;
+          this.itemListHistoryTraining =
+            response.data.data.result.listHistoryTraining;
           //   this.detailTask = response.data.data.result.GetDetailTask;
         } else {
           console.log("Kosong");
@@ -990,28 +1100,39 @@ export default {
       }
     },
 
-     async downloadFileApi(val,item){
+    async downloadFileApi(val, item) {
       // var imagesvalue = 'public/uploads/1656286341_login_tokomas.PNG';
       var imagesvalue = val;
       try {
-        const response = await axios.get(this.BaseUrlGet + "downloadfile?path_file="+imagesvalue, {
-          headers: {
-            Authorization: `Bearer ` + this.authtoken,
-          },
-          responseType: 'blob',
-        });
+        const response = await axios.get(
+          this.BaseUrlGet + "downloadfile?path_file=" + imagesvalue,
+          {
+            headers: {
+              Authorization: `Bearer ` + this.authtoken,
+            },
+            responseType: "blob",
+          }
+        );
         console.log(response.data);
         if (response.data.length != 0) {
           const myArray = imagesvalue.split(".");
-          var flag_menu = '';
-          if(item.flag_menu){
+          var flag_menu = "";
+          if (item.flag_menu) {
             flag_menu = item.flag_menu;
           }
 
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "Dokumen "+flag_menu+" "+this.getdokname(imagesvalue)+"." + myArray[1]); 
+          link.setAttribute(
+            "download",
+            "Dokumen " +
+              flag_menu +
+              " " +
+              this.getdokname(imagesvalue) +
+              "." +
+              myArray[1]
+          );
           document.body.appendChild(link);
           link.click();
         } else {
@@ -1027,17 +1148,21 @@ export default {
       }
     },
 
-    async getFoto(val){
+    async getFoto(val) {
       // var imagesvalue = 'public/uploads/1656286341_login_tokomas.PNG';
       var imagesvalue = val;
       try {
-        const response = await axios.get(this.BaseUrlGet + "getimages?path_file="+imagesvalue, {
-          headers: {
-            Authorization: `Bearer ` + this.authtoken,
-          },
-        });
+        const response = await axios.get(
+          this.BaseUrlGet + "getimages?path_file=" + imagesvalue,
+          {
+            headers: {
+              Authorization: `Bearer ` + this.authtoken,
+            },
+          }
+        );
         if (response.data.length != 0) {
-          this.detailEmp.foto = "data:image/jpg;base64," + response.data.data.result;
+          this.detailEmp.foto =
+            "data:image/jpg;base64," + response.data.data.result;
         } else {
           console.log("Kosong");
         }
@@ -1051,11 +1176,9 @@ export default {
       }
     },
 
-
-
-    downloadFile(val,item){
+    downloadFile(val, item) {
       console.log(item);
-      this.downloadFileApi(val,item);
+      this.downloadFileApi(val, item);
     },
 
     tabsdetail(val) {
@@ -1089,7 +1212,7 @@ export default {
         this.workdata = false;
         this.documentdata = true;
         this.statusdata = false;
-      }else {
+      } else {
         this.personaldata = false;
         this.familydata = false;
         this.workdata = false;
@@ -1124,7 +1247,7 @@ export default {
         }
 
         return "Rp. " + rupiah;
-      }else{
+      } else {
         return bilangan;
       }
     },
@@ -1170,16 +1293,15 @@ export default {
 
       return tanggal + " " + bulanIndo[Math.abs(bulan)] + " " + tahun;
     },
-    
-    getdokname(val){
-      if(val){
+
+    getdokname(val) {
+      if (val) {
         const myArray = val.split("/");
         return myArray[2];
-      }else{
-        return '-'
+      } else {
+        return "-";
       }
     },
   },
 };
 </script>
-
