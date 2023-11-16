@@ -10,14 +10,106 @@
         <v-icon>mdi-chevron-right</v-icon>
       </template></v-breadcrumbs
     >
-
-    <v-container>
+    <VueHtml2pdf
+      :show-layout="false"
+      :float-layout="true"
+      :enable-download="true"
+      :preview-modal="true"
+      :paginate-elements-by-height="1800"
+      filename="myPDF"
+      :pdf-quality="2"
+      :manual-pagination="false"
+      pdf-format="a4"
+      pdf-orientation="portrait"
+      pdf-content-width="100%"
+      ref="html2Pdf"
+    >
+      <section slot="pdf-content" style="font-family: 'Arial'; padding: 20px">
+        <h1 style="font-size: 24px;text-align: center; margin: 20px 0">Data Karyawan</h1>
+        <table
+          style="border: 1px solid black; width: 100%;border-collapse: collapse;"
+        >
+          <tr style="border: 1px solid black;background-color: lightgrey">
+            <td style="padding: 20px">
+              <th style="text-align: center">A. Personal Data</th>
+            </td>
+          </tr>
+          <tr v-for="(item, index) in getPersonalData[0]" :key="index">
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ item }}</p>
+            </td>
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ getPersonalData[1][index] }}</p>
+            </td>
+          </tr>
+        </table>
+        <table
+          style="border: 1px solid black; width: 100%;border-collapse: collapse;margin-top: 20px">
+         <tr style="border: 1px solid black;background-color: lightgrey">
+            <td style="padding: 20px">
+              <th style="text-align: center">B. Family Data</th>
+            </td>
+          </tr>
+          <tr v-for="(item, index) in getFamilyData[0]" :key="index">
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ item }}</p>
+            </td>
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ getFamilyData[1][index] }}</p>
+            </td>
+          </tr>
+        </table>
+        <table
+          style="border: 1px solid black; width: 100%;border-collapse: collapse;margin-top: 20px">
+          <tr style="border: 1px solid black;background-color: lightgrey">
+            <td style="padding: 20px">
+              <th style="text-align: center">C. List Anak Data</th>
+            </td>
+          </tr>
+          <tr>
+              <th style="border: 1px solid black;padding: 20px">Nama</th>
+              <th style="border: 1px solid black;padding: 20px">Anak Ke</th>
+              <th style="border: 1px solid black;padding: 20px ">TTL</th> 
+              <th style="border: 1px solid black;padding: 20px">Status Menikah</th>
+          </tr>
+          <tr v-for="(item, index) in itemlistanak" :key="index">
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ item.nama }}</p>
+            </td>
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ item.anak_ke }}</p>
+            </td>
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ `${item.tempat_lahir}/${item.tanggal_lahir}` }}</p>
+            </td>
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ item.status_nikah }}</p>
+            </td>
+          </tr>
+        </table>
+        <table
+        style="border: 1px solid black; width: 100%;border-collapse: collapse;margin-top: 20px">
+          <tr style="border: 1px solid black;background-color: lightgrey">
+            <td style="padding: 20px">
+              <th style="text-align: center">D. Work Data</th>
+            </td>
+          </tr>
+          <tr v-for="(item, index) in getWorkData[0]" :key="index">
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ item }}</p>
+            </td>
+            <td style="padding: 20px; border: 1px solid black">
+              <p style="font-size: 14px">{{ getWorkData[1][index] }}</p>
+            </td>
+          </tr>
+        </table>
+      </section>
+    </VueHtml2pdf>
+    <v-container fluid>
       <div class="d-flex justify-end pb-4">
-        <downloadexcel :data="sheetsData" :settings="excelSettings">
-          <v-btn dark class="mb-2" color="#b9a700">
-            <v-icon small>mdi-download</v-icon> Download
-          </v-btn>
-        </downloadexcel>
+        <v-btn dark class="mb-2" color="#b9a700" @click="downloadExcel">
+          <v-icon small>mdi-download</v-icon> Download
+        </v-btn>
       </div>
       <v-card class="pr-2 mt-2">
         <v-row>
@@ -803,39 +895,14 @@
 
 <script>
 import axios from "axios";
-import downloadexcel from "vue-json-excel";
+import VueHtml2pdf from "vue-html2pdf";
 
 export default {
   name: "EmployeeDetail",
   components: {
-    downloadexcel,
+    VueHtml2pdf,
   },
   data: () => ({
-    sheetsData: [
-        {
-          name: 'Sheet 1',
-          data: [
-            ['Header 1', 'Header 2'],
-            [1, 'A'],
-            [2, 'B'],
-            [3, 'C'],
-          ],
-        },
-        {
-          name: 'Sheet 2',
-          data: [
-            ['Value'],
-            [10],
-            [20],
-            [30],
-          ],
-        },
-      ],
-      excelSettings: {
-        headers: true,
-        fileformat: 'xlsx',
-        filename: 'my_excel_file',
-      },
     itemsbr: [
       {
         text: "Employee",
@@ -1052,7 +1119,60 @@ export default {
     this.getDetail();
   },
 
+  computed: {
+    getPersonalData() {
+      const { detailEmp } = this
+      const personaldata = [[
+        'Nama Lengkap', 'No Ktp', 'Tempat Lahir', 'Tanggal Lahir', 'Gol Darah', 'Agama', 'Jenis Kelamin', 'Nomor Induk Karyawan',
+        'Divisi', 'Department', 'Jabatan', 'Status Karyawan', 'No Rumah', 'RT', 'RW', 'Desa', 'Kecamatan', 'Kab/Kota', 'No Telp', 
+        'No Telp (darurat)', 'Hubungan Contact Darurat'
+      ], [
+        detailEmp.nama_lengkap, detailEmp.no_ktp, detailEmp.tempat_lahir, detailEmp.tanggal_lahir, detailEmp.gol_darah, 
+        detailEmp.agama, detailEmp.jenis_kelamin, detailEmp.no_induk_karyawan, detailEmp.divisi, detailEmp.departement, detailEmp.jabatan,
+        detailEmp.status_karyawan, detailEmp.no_rumah, detailEmp.rt, detailEmp.rw, detailEmp.desa, detailEmp.kec, detailEmp.kab, detailEmp.telpon,
+        detailEmp.no_telpon_darurat, detailEmp.hubungan_telp_darurat
+      ]]
+      return personaldata
+    },
+
+    getWorkData() {
+      const { detailEmp } = this
+      const workData = [[
+        'Pendidikan Terakhir', 'Mulai Masuk Kerja', 'Bagian', 'Ditetapkan', 'No Koperasi',
+        'Status', 'Tanggal Kontrak Selesai', 'Gaji', 'Sisa Cuti'
+      ], [
+        detailEmp.pendidikan_terakhir, detailEmp.mulai_masuk_kerja, detailEmp.bagian, detailEmp.ditetapkan,
+        detailEmp.no_anggota_koperasi, detailEmp.status_karyawan, detailEmp.tanggal_kontrak, detailEmp.gaji_sekarang,
+        detailEmp.sisa_cuti
+      ]]
+      return workData
+    },
+
+    getFamilyData() {
+      const { detailEmp } = this
+      const familydata = [[
+        'Orang Tua', 'Status Nikah', 'Istri/Suami', 'Pekerjaan'
+      ], [detailEmp.nama_ortu, detailEmp.status_nikah, detailEmp.nama_istri_suami, detailEmp.pekerjaan_istri_suami]];
+      return familydata
+    },
+
+    getDaftarAnakData() {
+      const listAnak = this.itemlistanak.map(value => [
+        value.nama, value.anak_ke, `${value.tempat_lahir}/${value.tanggal_lahir}`,
+        value.status_status, value.status_nikah
+      ])
+      const daftarAnak = [
+        ['Nama', 'Anak Ke', 'TTL', 'Kerja/Sekolah', 'Status Menikah'],
+        ...listAnak
+      ]
+      return daftarAnak
+    }
+  },
+
   methods: {
+    downloadExcel() {
+      this.$refs.html2Pdf.generatePdf();
+    },
     async getDetail() {
       try {
         const response = await axios.get(
